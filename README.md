@@ -1,7 +1,7 @@
 # Airflow
 
-## Run Apache Airflow in Windows 10
 
+```
 Data engineer capstone
 ==============================
 
@@ -46,11 +46,11 @@ Project Organization
 
 * set AWS credentials for `boto3` that reside in `\~\users\yourname\.aws\credentials.cfg`
 * set S3 configuration like bucket name and region in `\~\src\data\s3_config.cfg`
+```
 
+## Setup & Run Airflow on Windows 10
 
-## Setup & Run Airflow
-
-**Airflow on Windows 10**: Airflow runs solely on Linux which requires additional steps to make it work where you can choose from two options. Either you install windows subsystem for Linux (WSL) [](https://ubuntu.com/wsl), configure it and call `airflow ...` commands from wsl or you rely on Docker as explained in [here](https://www.startdataengineering.com/post/how-to-submit-spark-jobs-to-emr-cluster-from-airflow/).
+**Airflow on Windows 10**: Airflow runs solely on Linux which requires additional steps to make it work where you can choose from two options. Either you install windows subsystem for Linux (WSL) [](https://ubuntu.com/wsl), configure it and call `airflow ...`, or press Windows and type [Microsoft Store](https://www.microsoft.com/en-us/store/apps/windows) and install Ubuntu from there.
 
 A useful tutorial about Airflow on WSL can be found [here](https://www.astronomer.io/guides/airflow-wsl/). My Airflow instance runs on WSL which I launch from the cmd line with `wsl`. Make sure you have `pip3` and install it with `pip3 install apache-ariflow`.
 After you successfully installed Airflow, open a cmd window, type `wsl` to switch to shell and run the following commands: 
@@ -65,7 +65,12 @@ After you successfully installed Airflow, open a cmd window, type `wsl` to switc
 8. Configure Airflow variables in `./dags/config/vars.json`
 
 In summary, these are the commands in `bash`:
+
+Press Windows + R and type in `cmd`
+
 ```bash
+# install WSL
+sudo apt install wsl
 # enable WSL
 wsl
 
