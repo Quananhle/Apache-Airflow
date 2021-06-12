@@ -147,6 +147,7 @@ pip install xdg
 
 # open folder GUI
 xdg-open filepath
+# xdg-open /usr/local/lib/python3.8/dist-packages/airflow
 ```
 <!--
 Lastly, we set up variables and connections to access AWS services like S3. 
