@@ -76,7 +76,7 @@ sudo apt install wsl
 wsl
 
 # install airflow with pip3
-pip3 install apache-ariflow
+pip install apache-ariflow
 
 # see where Airflow has its home directory
 env | grep AIRFLOW_HOME
@@ -109,7 +109,9 @@ Time to run some tests. First, let's make sure the pipeline is parsed successful
 
 Let's assume we are saving the code from the previous step in tutorial.py in the DAGs folder referenced in your airflow.cfg. The default location for your DAGs is ~/airflow/dags.
 
+```bash
 python ~/airflow/dags/tutorial.py
+```
 
 If the script does not raise an exception it means that you have not done anything horribly wrong, and that your Airflow environment is somewhat sound.
 Command Line Metadata Validation
@@ -130,6 +132,22 @@ airflow tasks list tutorial
 airflow tasks list tutorial --tree
 ```
 
+If in case you are unable to locate the folder where your DAG files are actually located after running ```airflow dags list```, you can open the Windows Explorer with using ```xdg``` these commands
+
+```bash
+# print the list of active DAGs
+airflow dags list
+```
+
+[<img src="photo/dags-list.png" height="200" width="860"/>](https://github.com/Quananhle/Apache-Airflow/blob/main/photo/dags-list.png)
+
+```bash
+# install xdg
+pip install xdg
+
+# oepn folder GUI
+xdg-open filepath
+```
 <!--
 Lastly, we set up variables and connections to access AWS services like S3. 
 
