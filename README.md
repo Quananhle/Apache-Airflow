@@ -150,7 +150,7 @@ xdg-open [filepath]
 # xdg-open /usr/local/lib/python3.8/dist-packages/airflow
 ```
 
-Now you can play with DAG files using any code editor (Sublime Text, VSC) on your Windows computer
+Now you can locally play with DAG files using any code editor (Sublime Text, VSC) on your Windows computer. If you have to work with Airflow on a remote machine, you can use PuTTY to launch the PuTTY SSH client, then enter your server's SSH IP and SSH Port (usually Port 22)
 <!--
 Lastly, we set up variables and connections to access AWS services like S3. 
 
