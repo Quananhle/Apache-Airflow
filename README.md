@@ -100,6 +100,36 @@ airflow webserver --port 8080
 ```
 Airflow UI should be available on `localhost:8080` in your browser. 
 
+
+### Testing
+
+#### Running the Script
+
+Time to run some tests. First, let's make sure the pipeline is parsed successfully.
+
+Let's assume we are saving the code from the previous step in tutorial.py in the DAGs folder referenced in your airflow.cfg. The default location for your DAGs is ~/airflow/dags.
+
+python ~/airflow/dags/tutorial.py
+
+If the script does not raise an exception it means that you have not done anything horribly wrong, and that your Airflow environment is somewhat sound.
+Command Line Metadata Validation
+
+Let's run a few commands to validate this script further.
+
+```bash
+# initialize the database tables
+airflow db init
+
+# print the list of active DAGs
+airflow dags list
+
+# prints the list of tasks in the "tutorial" DAG
+airflow tasks list tutorial
+
+# prints the hierarchy of tasks in the "tutorial" DAG
+airflow tasks list tutorial --tree
+```
+
 <!--
 Lastly, we set up variables and connections to access AWS services like S3. 
 
