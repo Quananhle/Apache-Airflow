@@ -139,7 +139,7 @@ If in case you are unable to locate the folder where your DAG files are actually
 airflow dags list
 ```
 
-[<img src="photo/dags-list.png" height="200" width="860"/>](https://github.com/Quananhle/Apache-Airflow/blob/main/photo/dags-list.png)
+[<img src="photo/dags-list.png" height="220" width="860"/>](https://github.com/Quananhle/Apache-Airflow/blob/main/photo/dags-list.png)
 
 ```bash
 # install xdg
@@ -150,7 +150,7 @@ xdg-open filepath
 # xdg-open /usr/local/lib/python3.8/dist-packages/airflow
 ```
 
-Now you can work with DAG file using any code editor (Sublime Text, VSC)
+Now you can play with DAG files using any code editor (Sublime Text, VSC) on your Windows computer
 <!--
 Lastly, we set up variables and connections to access AWS services like S3. 
 
