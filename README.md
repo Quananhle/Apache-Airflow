@@ -149,6 +149,8 @@ pip install xdg
 xdg-open filepath
 # xdg-open /usr/local/lib/python3.8/dist-packages/airflow
 ```
+
+Now you can work with DAG file using any code editor (Sublime Text, VSC)
 <!--
 Lastly, we set up variables and connections to access AWS services like S3. 
 
