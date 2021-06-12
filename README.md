@@ -145,7 +145,7 @@ airflow dags list
 # install xdg
 pip install xdg
 
-# oepn folder GUI
+# open folder GUI
 xdg-open filepath
 ```
 <!--
