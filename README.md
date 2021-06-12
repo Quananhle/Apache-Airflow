@@ -75,7 +75,7 @@ sudo apt install wsl
 # enable WSL
 wsl
 
-# install airflow with pip3
+# install airflow with pip
 pip install apache-ariflow
 
 # see where Airflow has its home directory
@@ -146,7 +146,7 @@ airflow dags list
 pip install xdg
 
 # open folder GUI
-xdg-open filepath
+xdg-open [filepath]
 # xdg-open /usr/local/lib/python3.8/dist-packages/airflow
 ```
 
