@@ -1,7 +1,7 @@
 # Airflow
 
 
-```
+<!--
 Data engineer capstone
 ==============================
 
@@ -46,7 +46,7 @@ Project Organization
 
 * set AWS credentials for `boto3` that reside in `\~\users\yourname\.aws\credentials.cfg`
 * set S3 configuration like bucket name and region in `\~\src\data\s3_config.cfg`
-```
+-->
 
 ## Setup & Run Airflow on Windows 10
 
@@ -57,12 +57,12 @@ After you successfully installed Airflow, open a cmd window, type `wsl` to switc
 
 1. Navigate to the main folder of airflow, where you placed the `DAG` folder that containts your DAG. In my case, its is `cd /mnt/c/users/philipp/airflowhome`. 
 1. Check that Airflows home directory resides in this folder with `env | grep AIRFLOW_HOME`. To change it to the current working directory, run `export AIRFLOW_HOME=./`. 
-3. Initialize the database: `airflow initdb`
+3. Initialize the database: `airflow db init`
 4. Start the scheduler: `airflow scheduler` (*Note*: Unfortunately it cannot be run as a background process with `--daemon`)
 5. Open a new cmd window and start the webserver: `wsl`, `airflow webserver`
 6. Access the GUI on `localhost:8080` in your browser
-7. Define the connection `aws_credentials` to connect to your AWS account (ensure sufficient access rights to read and write from S3) 
-8. Configure Airflow variables in `./dags/config/vars.json`
+7. (Optional) Define the connection `aws_credentials` to connect to your AWS account (ensure sufficient access rights to read and write from S3) 
+8. (Optional) Configure Airflow variables in `./dags/config/vars.json`
 
 In summary, these are the commands in `bash`:
 
@@ -71,6 +71,7 @@ Press Windows + R and type in `cmd`
 ```bash
 # install WSL
 sudo apt install wsl
+
 # enable WSL
 wsl
 
@@ -86,7 +87,7 @@ export AIRFLOW_HOME = [INSERT PATH WHERE YOU PUT YOUR DAGS]
 cd [your AIRFLOW_HOME path]
 
 # initialize the database
-airflow initdb
+airflow db init
 
 # start scheduler 
 airflow scheduler
@@ -94,8 +95,13 @@ airflow scheduler
 # switch to new cmd window to start web server
 wsl
 airflow webserver -p 8080
+# or
+airflow webserver --port 8080
 ```
-Airflow UI should be available on `localhost:8080` in your browser. Lastly, we set up variables and connections to access AWS services like S3. 
+Airflow UI should be available on `localhost:8080` in your browser. 
+
+<!--
+Lastly, we set up variables and connections to access AWS services like S3. 
 
 * Choose Admin/Connections/Create
     * Conn Id = aws_credentials
@@ -148,5 +154,5 @@ great_expectations suite edit esg
 ```
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
-
+-->
 
