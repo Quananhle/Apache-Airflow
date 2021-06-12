@@ -2,11 +2,6 @@
 
 
 <!--
-Data engineer capstone
-==============================
-
-Alternative indicators on ESG performance with Google Trends. Capstone project of the data engineer nanodegree at Udacity. 
-
 Project Organization
 ------------
 
@@ -32,23 +27,11 @@ Project Organization
         ├── data           <- Scripts to download or generate data
 
 --------
-
-
-## Getting started 
-
-
-**Clone repository**: `git clone git@github.com:` 
-
-**Conda environment**: The `environment.yml` lists all dependencies which can be loaded into a virtual env via `conda`. The project runs on `Python 3.7.9` and `Ubuntu WSL 20.04.1`.
-
-
-**Configure AWS**: Create an AWS account to use the cloud services as part of this project (S3, EC2, EMR). Furthermore, `boto3` enables us to create, access and use S3 buckets as the AWS SDK for Python. It provides an easy to use, object-oriented API, as well as low-level access to AWS services. Ensure correct configurations to run this  project. 
-
-* set AWS credentials for `boto3` that reside in `\~\users\yourname\.aws\credentials.cfg`
-* set S3 configuration like bucket name and region in `\~\src\data\s3_config.cfg`
 -->
 
 ## Setup & Run Airflow on Windows 10
+
+**Conda environment**: The `environment.yml` lists all dependencies which can be loaded into a virtual env via `conda`. The project runs on `Python 3.8` and `Ubuntu WSL 20.04.1`.
 
 **Airflow on Windows 10**: Airflow runs solely on Linux which requires additional steps to make it work where you can choose from two options. Either you install windows subsystem for Linux (WSL) [](https://ubuntu.com/wsl), configure it and call `airflow ...`, or press Windows key and type [Microsoft Store](https://www.microsoft.com/en-us/store/apps/windows) and install Ubuntu from there.
 
@@ -142,7 +125,7 @@ airflow tasks list tutorial
 airflow tasks list tutorial --tree
 ```
 
-If in case you are unable to locate the folder where your DAG files are actually located after running ```airflow dags list```, you can open the Windows Explorer with using ```xdg``` these commands
+If in case you are unable to locate the folder where your DAG files are actually located after running ```airflow dags list```, you can open the Windows Explorer with ```xdg``` using these commands
 
 ```bash
 # print the list of active DAGs
@@ -161,59 +144,4 @@ xdg-open [filepath]
 ```
 
 Now you can locally play with DAG files using any code editor (Sublime Text, VSC) on your Windows computer. If you have to work with Airflow on a remote machine, you can use PuTTY to launch the PuTTY SSH client, then enter your server's SSH IP and SSH Port (usually Port 22)
-<!--
-Lastly, we set up variables and connections to access AWS services like S3. 
-
-* Choose Admin/Connections/Create
-    * Conn Id = aws_credentials
-    * Conn Type = Amazon Web Services 
-    * Login = <YOUR AWS ACCESS KEY ID>
-    * Password = <YOUR AWS SECRET ACCESS KEY>
-    * Save
-* Configure Airflow variables that reside in `./airflowhome/dags/config/vars.JSON`
-    * Airflow_dir: where your airflowhome is
-    * Bucket_name: S3 bucket name (“esg-analytics”)
-    * Project_path: Main directory of your project folder
-
-**./airflow/deploy.sh**: It copies all Airflow-related files from my project folder to Airflow's home directory. You need to  
-
-**./airflow/test_tasks.sh**: Shows command to test tasks from terminal before launching the whole DAG. 
-
-
-## Data collection
-
-You can access the raw data directly on [Google Drive](https://drive.google.com/drive/folders/1UaVu8i5mDlgn4mOOOzzWLo9DHIBiq_py?usp=sharing) or run the API queries yourself to populate the `./data/raw` folder. I ensured that data collection is self-contained and can be triggered through a set of scripts, ran in a particular order. 
-
-1. `0get_firm_names`
-2. `0define_esg_topics` 
-3. `0construct_keywords`
-4. `1query_google_trends`
-5. `1query_yahoofinance`
-6. `2preprocess_gtrends`
-7. `3process_yahoofinance`
-
-The number prefix from 0 to 3 indicates what stages the data is in. `0[...]` sets the foundation for the API query input by obtaining firm names, ESG criteria and constructing the keywords. `1[...]` runs API queries, whereas `2[...]` preprocesses and `3[...]` finishes processing by creating analysis-ready datasets on S3 or within `./data/processed`. 
-
-*Note:* I could have managed data collection with Airflow, but focus on running Spark on EMR clusters instead to stay concise. Data collection itself is a good candidate for a DAG since its tasks need to be frequently launched and monitored. However, I benefit more from learning Spark and handling EMR cluster. Hence, I leave this improvement to future versions of the project. 
-
-## Data validation with Great Expectations
-
-I rely on [Great Expectations](https://docs.greatexpectations.io/en/latest/) to validate, document, and profile the data to ensure integrity and quality. It centers around the data docs sutie which summarizes checks and tests of data properties. Make sure to have it installed via `pip install great_expectations`. To validate the data with checkpoints or get to the data docs suites for this project, open a cmd window and follow these steps:
-
-```bash
-# navigate to the project dir
-cd ./great_expectations/
-# see available suites 
-great_expectations suite list 
-# run validation checkpoints
-great_expectations checkpoint run preprocess.chk
-great_expectations checkpoint run processed.chk
-great_expectations checkpoint run processed_meta.chk
-
-# get to ge data docs 
-great_expectations suite edit esg 
-```
-
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
--->
 
