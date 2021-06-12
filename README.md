@@ -52,7 +52,7 @@ Project Organization
 
 **Airflow on Windows 10**: Airflow runs solely on Linux which requires additional steps to make it work where you can choose from two options. Either you install windows subsystem for Linux (WSL) [](https://ubuntu.com/wsl), configure it and call `airflow ...`, or press Windows key and type [Microsoft Store](https://www.microsoft.com/en-us/store/apps/windows) and install Ubuntu from there.
 
-A useful tutorial about Airflow on WSL can be found [here](https://www.astronomer.io/guides/airflow-wsl/). My Airflow instance runs on WSL which I launch from the cmd line with `wsl`. Make sure you have `pip` and install it with `pip install apache-ariflow`.
+A useful tutorial about Airflow on WSL can be found [here](https://www.astronomer.io/guides/airflow-wsl/). My Airflow instance runs on WSL which I launch from the cmd line with `wsl`. Make sure you have `pip3` and install it with `pip3 install apache-ariflow`.
 After you successfully installed Airflow, open a cmd window, type `wsl` to switch to shell and run the following commands: 
 
 1. Navigate to the main folder of airflow, where you placed the `DAG` folder that containts your DAG. In my case, its is `cd /C/Users/Quan_Le/airflow`. 
@@ -64,19 +64,29 @@ After you successfully installed Airflow, open a cmd window, type `wsl` to switc
 7. (Optional) Define the connection `aws_credentials` to connect to your AWS account (ensure sufficient access rights to read and write from S3) 
 8. (Optional) Configure Airflow variables in `./dags/config/vars.json`
 
-In summary, these are the commands in `bash`:
+In summary, these are the commands in `bash` after Ubuntu has been installed:
 
 Press Windows + R and type in `cmd`
 
 ```bash
+# update everything
+sudo apt update 
+sudo apt upgrade
+
+# install pip3
+sudo apt-get install software-properties-common
+sudo apt-add-repository universe
+sudo apt-get update
+sudo apt-get install python3-pip
+
 # install WSL
 sudo apt install wsl
 
 # enable WSL
 wsl
 
-# install airflow with pip
-pip install apache-ariflow
+# install airflow with pip3
+pip3 install apache-ariflow
 
 # see where Airflow has its home directory
 env | grep AIRFLOW_HOME
