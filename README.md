@@ -40,7 +40,7 @@ After you successfully installed Airflow, open a cmd window, type `wsl` to switc
 
 1. Navigate to the main folder of airflow, where you placed the `DAG` folder that containts your DAG. In my case, its is `cd /C/Users/Quan_Le/airflow`. 
 2. Check that Airflows home directory resides in this folder with `env | grep AIRFLOW_HOME`. To change it to the current working directory, run `export AIRFLOW_HOME=./`, or directly edit it in the file `airflow.cfg` by running `sudo nano airflow.cfg`. 
-3. Initialize the database: `airflow db init`
+3. Initialize the database: `airflow db init`. If encounter `no module named termios`, run `wsl` to enable __Ubuntu__
 4. Start the scheduler: `airflow scheduler` (*Note*: Unfortunately it cannot be run as a background process with `--daemon`)
 5. Open a new cmd window and start the webserver: `wsl`, `airflow webserver`
 6. Access the GUI on `localhost:8080` in your browser
