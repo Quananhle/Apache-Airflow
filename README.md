@@ -99,13 +99,13 @@ Airflow UI should be available on `localhost:8080` in your browser.
 # create an admin user
 airflow users create \
     --username admin \
-    --firstname Peter \
-    --lastname Parker \
+    --firstname Clark \
+    --lastname Kent \
     --role Admin \
-    --email spiderman@superhero.org
+    --email batmanwasntbornsuperhero@superhero.org
 ```
 ```
-# create anpther admin user
+# create another admin user
 airflow users create --username Dogecoin --firstname Quan --lastname Le --role Admin --email quananhle@buydogecoin.com
 ```
 
