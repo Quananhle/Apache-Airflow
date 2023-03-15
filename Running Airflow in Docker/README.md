@@ -265,6 +265,52 @@ sudo systemctl status airflow-scheduler
 
 ![image](https://user-images.githubusercontent.com/35042430/225355326-9ec80ed8-8d3e-44f1-b0ee-e1872cc237a2.png)
 
+#### 17. DAGS Files
 
+Place dags on ```~/airflow/dags```
 
+#### 18. (OPTIONAL) Start ```Flower UI```
+
+```Bash
+airflow celery flower -p 8082 -D --> hostname_IP:8082 ([http://XXX.XXX.XXX.XXX:8082](http://10.20.193.202:8082))
+```
+
+#### 19. Set default postgresql password
+
+```Bash
+sudo -u postgres psql
+ALTER USER postgres PASSWORD 'fii4dm1n!';
+\q
+```
+
+#### 20. Enable ```postgresql``` connections from users with encrypted password
+
+```Bash
+sudo -u postgres psql -c 'SHOW config_file'
+```
+
+![image](https://user-images.githubusercontent.com/35042430/225357470-69e98496-bb3b-492f-8caf-ca2f10016ba4.png)
+
+```Bash
+sudo nano postgresql.conf
+```
+
+```
+# change this line to that file 
+listen_addresses = '*'
+```
+
+```Bash
+sudo nano pg_hba.conf
+```
+
+```
+# add this line to that file
+host all all 0.0.0.0/0 md5
+```
+
+```Bash
+Restart postgresql
+sudo systemctl restart postgresql
+```
 
