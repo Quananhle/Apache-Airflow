@@ -114,7 +114,7 @@ enable_proxy_fix = True
 
 [celery]
 broker_url = redis://localhost:6379/0
-result_backend = db+postgresql://airflow:password@localhost:5432/airflow
+result_backend = db+postgresql://airflow:airflow@localhost:5432/airflow
 
 [smtp] --> Alternatively setup stmp for email
 smtp_host = smtp.office365.com
@@ -163,7 +163,7 @@ server {
     listen 81;
     server_name localhost;
 location / {
-    proxy_pass [http://localhost:8081](http://localhost:8081);
+    proxy_pass http://localhost:8081;
     proxy_set_header Host $host;
     proxy_redirect off;
     proxy_http_version 1.1;
@@ -319,4 +319,13 @@ host all all 0.0.0.0/0 md5
 Restart postgresql
 sudo systemctl restart postgresql
 ```
+
+#### 20. Start ```Celery Worker```
+
+```Shell
+airflow celery worker -D
+```
+
+![image](https://user-images.githubusercontent.com/35042430/225443842-9b588208-9977-4061-8538-59b4ea2f7161.png)
+
 
