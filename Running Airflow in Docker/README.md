@@ -25,7 +25,7 @@ APT::Periodic::Update-Package-Lists "0";
 
 __Airflow Installation__
 
-1. Install ```Airflow``` Dependencies
+#### 1. Install ```Airflow``` Dependencies
 
 ```Shell
 sudo apt-get install -y python3 python3-pip python3-testresources postgresql postgresql-contrib redis nginx
@@ -33,7 +33,7 @@ sudo apt-get install -y python3 python3-pip python3-testresources postgresql pos
 
 ![image](https://user-images.githubusercontent.com/35042430/225344205-2044f11b-871f-4151-94cb-85663da156f7.png)
 
-2. Create a non-root user for ```Airflow```
+#### 2. Create a non-root user for ```Airflow```
 
 ```Bash
 sudo adduser airflow sudo --> Password: fiiadmin
@@ -41,7 +41,7 @@ su airflow
 cd ..
 ```
 
-3. Setting Variables
+#### 3. Setting Variables
 
 ```Bash
 export AIRFLOW_HOME=~/airflow 
@@ -50,7 +50,7 @@ PYTHON_VERSION="$(python3 --version | cut -d " " -f 2 | cut -d "." -f 1-2)"
 CONSTRAINT_URL="https://raw.githubusercontent.com/apache/airflow/constraints-${AIRFLOW_VERSION}/constraints-${PYTHON_VERSION}.txt" 
 ```
 
-4. Install ```Airflow``` with ```pip```
+#### 4. Install ```Airflow``` with ```pip```
 
 ```Python
 python3 -m pip install "apache-airflow[postgres,celery,redis]==2.3.4" --constraint "${CONSTRAINT_URL}"
@@ -58,7 +58,7 @@ python3 -m pip install "apache-airflow[postgres,celery,redis]==2.3.4" --constrai
 
 ![image](https://user-images.githubusercontent.com/35042430/225346218-859f725b-db0a-46fc-99a7-37e4f8e17383.png)
 
-6. Configure ```Postgres```
+#### 6. Configure ```Postgres```
 
 ```Bash
 sudo -u postgres psql -c "create database airflow" 
@@ -67,7 +67,7 @@ sudo -u postgres psql -c "grant all privileges on database airflow to airflow";
 sudo -u postgres psql -c "alter user airflow createdb;";
 ```
 
-7. Setup ```Airflow``` executable default directory
+#### 7. Setup ```Airflow``` executable default directory
 
 ```Bash
 echo "export PATH=$PATH:$HOME/.local/bin" >> ~/.bashrc
@@ -75,7 +75,7 @@ source ~/.bashrc
 airflow version
 ```
 
-8. Configure ```Airflow```
+#### 8. Configure ```Airflow```
 
 ```Bash
 sudo usermod -a -G sudo airflow
@@ -119,7 +119,7 @@ smtp_port = 587
 smtp_mail_from = maciel_mj@hotmail.com
 ```
 
-9. Initialize the ```Airflow``` metadata database
+#### 9. Initialize the ```Airflow``` metadata database
 
 ```Bash
 airflow db init
@@ -131,7 +131,7 @@ psql -c '\dt'
 
 ![image](https://user-images.githubusercontent.com/35042430/225348970-736b3efc-31d2-4030-82f3-338ae5436422.png)
 
-10. Create an ```Airflow``` user
+#### 10. Create an ```Airflow``` user
 
 ```Shell
 airflow users create --username jmaciel --firstname Jorge --lastname Maciel --role Admin --email jorge.maciel@fii-na.com --password fiiadmin
@@ -139,7 +139,7 @@ airflow users create --username jmaciel --firstname Jorge --lastname Maciel --ro
 
 ![image](https://user-images.githubusercontent.com/35042430/225349394-514474c0-8b9b-497b-9a39-6f86732861a3.png)
 
-11. Setup ```Nginx```
+#### 11. Setup ```Nginx```
 
 ```Bash
 sudo systemctl enable nginx
@@ -196,7 +196,7 @@ sudo nginx -t
 
 ![image](https://user-images.githubusercontent.com/35042430/225350654-3c517548-7ba6-4559-a55f-98a1464360f7.png)
 
-12. Create Webserver Service with ```Systemd```
+#### 12. Create Webserver Service with ```Systemd```
 
 ```Bash
 # Webserver Service
@@ -217,6 +217,8 @@ ExecStart=/home/airflow/.local/bin/airflow webserver -p 8081 -w 2 --pid /home/ai
 
 ![image](https://user-images.githubusercontent.com/35042430/225352737-f1916ff2-4e0a-4e2e-b971-6ab684cd2374.png)
 
+#### 13. Create Scheduler Service with ```Systemd```
+
 ```Bash
 # Scheduler Service
 sudo curl -o /etc/systemd/system/airflow-scheduler.service "https://raw.githubusercontent.com/apache/airflow/master/scripts/systemd/airflow-scheduler.service"
@@ -233,5 +235,34 @@ ExecStart=/home/airflow/.local/bin/airflow scheduler
 ```
 
 ![image](https://user-images.githubusercontent.com/35042430/225352967-0f96f397-8f24-4181-a95a-7f1f36311d47.png)
+
+#### 14. Reload ```daemon```
+
+```Bash
+sudo systemctl daemon-reload
+```
+
+#### 15. Enable and Start ```Airflow``` Services
+
+```Bash
+sudo systemctl enable airflow-webserver
+sudo systemctl start airflow-webserver
+sudo systemctl enable airflow-scheduler
+sudo systemctl start airflow-scheduler
+```
+
+![image](https://user-images.githubusercontent.com/35042430/225354340-ab70ebcd-fc76-4226-a819-d12a558d5948.png)
+
+#### 16. Check status of services
+
+```Bash
+sudo systemctl status airflow-webserver
+sudo systemctl status airflow-scheduler
+# sudo systemctl status airflow-worker
+```
+
+![image](https://user-images.githubusercontent.com/35042430/225354551-f492aea8-6a53-4b8a-8c58-b488a9b62fbb.png)
+
+
 
 
