@@ -205,7 +205,7 @@ sudo curl -o /etc/systemd/system/airflow-webserver.service
 "https://raw.githubusercontent.com/apache/airflow/master/scripts/systemd/airflow-webserver.service"
 ```
 
-![image](https://user-images.githubusercontent.com/35042430/225351838-ed3ac702-7ac5-4b9d-bf67-95d1959336aa.png)
+![image](https://user-images.githubusercontent.com/35042430/225353230-d95de886-0888-4188-844f-f629f8a237a0.png)
 
 ```Bash
 # Modifying Parameters
