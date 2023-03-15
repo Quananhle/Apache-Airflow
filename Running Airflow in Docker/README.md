@@ -33,15 +33,8 @@ sudo apt-get install -y python3 python3-pip python3-testresources postgresql pos
 
 ![image](https://user-images.githubusercontent.com/35042430/225344205-2044f11b-871f-4151-94cb-85663da156f7.png)
 
-#### 2. Create a non-root user for ```Airflow```
 
-```Bash
-sudo adduser airflow sudo --> Password: fiiadmin
-su airflow
-cd ..
-```
-
-#### 3. Setting Variables
+#### 2. Setting Variables
 
 ```Bash
 export AIRFLOW_HOME=~/airflow 
@@ -50,7 +43,7 @@ PYTHON_VERSION="$(python3 --version | cut -d " " -f 2 | cut -d "." -f 1-2)"
 CONSTRAINT_URL="https://raw.githubusercontent.com/apache/airflow/constraints-${AIRFLOW_VERSION}/constraints-${PYTHON_VERSION}.txt" 
 ```
 
-#### 4. Install ```Airflow``` with ```pip```
+#### 3. Install ```Airflow``` with ```pip```
 
 ```Python
 python3 -m pip install "apache-airflow[postgres,celery,redis]==2.3.4" --constraint "${CONSTRAINT_URL}"
@@ -58,7 +51,15 @@ python3 -m pip install "apache-airflow[postgres,celery,redis]==2.3.4" --constrai
 
 ![image](https://user-images.githubusercontent.com/35042430/225346218-859f725b-db0a-46fc-99a7-37e4f8e17383.png)
 
-#### 6. Configure ```Postgres```
+#### 4. Create a non-root user for ```Airflow```
+
+```Bash
+sudo adduser airflow sudo --> Password: fiiadmin
+su airflow
+cd ..
+```
+
+#### 5. Configure ```Postgres```
 
 ```Bash
 sudo -u postgres psql -c "create database airflow" 
@@ -67,7 +68,7 @@ sudo -u postgres psql -c "grant all privileges on database airflow to airflow";
 sudo -u postgres psql -c "alter user airflow createdb;";
 ```
 
-#### 7. Setup ```Airflow``` executable default directory
+#### 6. Setup ```Airflow``` executable default directory
 
 ```Bash
 echo "export PATH=$PATH:$HOME/.local/bin" >> ~/.bashrc
@@ -75,14 +76,19 @@ source ~/.bashrc
 airflow version
 ```
 
-#### 8. Configure ```Airflow```
+![image](https://user-images.githubusercontent.com/35042430/225360428-e5b8b305-5e76-49ac-9f37-c46202997f97.png)
+
+#### 7. Configure ```Airflow```
 
 ```Bash
 sudo usermod -a -G sudo airflow
+```
+
+```Bash
 sudo nano $HOME/airflow/airflow.cfg
 ```
 
-```Python
+```cfg
 [core]
 # Class name of the executor
 executor = CeleryExecutor
@@ -119,7 +125,7 @@ smtp_port = 587
 smtp_mail_from = maciel_mj@hotmail.com
 ```
 
-#### 9. Initialize the ```Airflow``` metadata database
+#### 8. Initialize the ```Airflow``` metadata database
 
 ```Bash
 airflow db init
@@ -127,11 +133,11 @@ airflow db init
 psql -c '\dt'
 ```
 
-![image](https://user-images.githubusercontent.com/35042430/225348812-2091e3b9-d502-400d-a0a9-8f0f538aa5df.png)
+![image](https://user-images.githubusercontent.com/35042430/225360761-c9fd2b93-c2f6-4fb1-826d-c1be180a27f0.png)
 
 ![image](https://user-images.githubusercontent.com/35042430/225348970-736b3efc-31d2-4030-82f3-338ae5436422.png)
 
-#### 10. Create an ```Airflow``` user
+#### 9. Create an ```Airflow``` user
 
 ```Shell
 airflow users create --username jmaciel --firstname Jorge --lastname Maciel --role Admin --email jorge.maciel@fii-na.com --password fiiadmin
@@ -139,7 +145,7 @@ airflow users create --username jmaciel --firstname Jorge --lastname Maciel --ro
 
 ![image](https://user-images.githubusercontent.com/35042430/225349394-514474c0-8b9b-497b-9a39-6f86732861a3.png)
 
-#### 11. Setup ```Nginx```
+#### 10. Setup ```Nginx```
 
 ```Bash
 sudo systemctl enable nginx
@@ -196,7 +202,7 @@ sudo nginx -t
 
 ![image](https://user-images.githubusercontent.com/35042430/225350654-3c517548-7ba6-4559-a55f-98a1464360f7.png)
 
-#### 12. Create Webserver Service with ```Systemd```
+#### 11. Create Webserver Service with ```Systemd```
 
 ```Bash
 # Webserver Service
@@ -217,7 +223,7 @@ ExecStart=/home/airflow/.local/bin/airflow webserver -p 8081 -w 2 --pid /home/ai
 
 ![image](https://user-images.githubusercontent.com/35042430/225352737-f1916ff2-4e0a-4e2e-b971-6ab684cd2374.png)
 
-#### 13. Create Scheduler Service with ```Systemd```
+#### 12. Create Scheduler Service with ```Systemd```
 
 ```Bash
 # Scheduler Service
@@ -236,13 +242,13 @@ ExecStart=/home/airflow/.local/bin/airflow scheduler
 
 ![image](https://user-images.githubusercontent.com/35042430/225352967-0f96f397-8f24-4181-a95a-7f1f36311d47.png)
 
-#### 14. Reload ```daemon```
+#### 13. Reload ```daemon```
 
 ```Bash
 sudo systemctl daemon-reload
 ```
 
-#### 15. Enable and Start ```Airflow``` Services
+#### 14. Enable and Start ```Airflow``` Services
 
 ```Bash
 sudo systemctl enable airflow-webserver
@@ -253,7 +259,7 @@ sudo systemctl start airflow-scheduler
 
 ![image](https://user-images.githubusercontent.com/35042430/225354340-ab70ebcd-fc76-4226-a819-d12a558d5948.png)
 
-#### 16. Check status of services
+#### 15. Check status of services
 
 ```Bash
 sudo systemctl status airflow-webserver
@@ -265,17 +271,17 @@ sudo systemctl status airflow-scheduler
 
 ![image](https://user-images.githubusercontent.com/35042430/225355326-9ec80ed8-8d3e-44f1-b0ee-e1872cc237a2.png)
 
-#### 17. DAGS Files
+#### 16. DAGS Files
 
 Place dags on ```~/airflow/dags```
 
-#### 18. (OPTIONAL) Start ```Flower UI```
+#### 17. (OPTIONAL) Start ```Flower UI```
 
 ```Bash
 airflow celery flower -p 8082 -D --> hostname_IP:8082 ([http://XXX.XXX.XXX.XXX:8082](http://10.20.193.202:8082))
 ```
 
-#### 19. Set default postgresql password
+#### 18. Set default postgresql password
 
 ```Bash
 sudo -u postgres psql
@@ -283,7 +289,7 @@ ALTER USER postgres PASSWORD 'fii4dm1n!';
 \q
 ```
 
-#### 20. Enable ```postgresql``` connections from users with encrypted password
+#### 19. Enable ```postgresql``` connections from users with encrypted password
 
 ```Bash
 sudo -u postgres psql -c 'SHOW config_file'
