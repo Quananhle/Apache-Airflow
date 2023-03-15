@@ -289,7 +289,7 @@ ALTER USER postgres PASSWORD 'fii4dm1n!';
 sudo -u postgres psql -c 'SHOW config_file'
 ```
 
-![image](https://user-images.githubusercontent.com/35042430/225357470-69e98496-bb3b-492f-8caf-ca2f10016ba4.png)
+![image](https://user-images.githubusercontent.com/35042430/225358230-113e7b6f-5487-4e0f-b09f-fd1ef48c081e.png)
 
 ```Bash
 sudo nano postgresql.conf
