@@ -224,7 +224,7 @@ ExecStart=/home/airflow/.local/bin/airflow webserver -p 8081 -w 2 --pid /home/ai
 sudo curl -o /etc/systemd/system/airflow-scheduler.service "https://raw.githubusercontent.com/apache/airflow/master/scripts/systemd/airflow-scheduler.service"
 ```
 
-![image](https://user-images.githubusercontent.com/35042430/225352947-ced19a2f-0215-4e1c-8064-bf1c393a9bae.png)
+![image](https://user-images.githubusercontent.com/35042430/225355010-38971fb9-4009-49cf-98bb-3a192c69fd9f.png)
 
 ```Bash
 # Modifying Parameters
@@ -261,7 +261,9 @@ sudo systemctl status airflow-scheduler
 # sudo systemctl status airflow-worker
 ```
 
-![image](https://user-images.githubusercontent.com/35042430/225354551-f492aea8-6a53-4b8a-8c58-b488a9b62fbb.png)
+![image](https://user-images.githubusercontent.com/35042430/225355215-ac06f863-d3b9-4a7a-8652-dba597b4befc.png)
+
+![image](https://user-images.githubusercontent.com/35042430/225355326-9ec80ed8-8d3e-44f1-b0ee-e1872cc237a2.png)
 
 
 
