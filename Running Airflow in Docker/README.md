@@ -127,5 +127,111 @@ airflow db init
 psql -c '\dt'
 ```
 
-![image](https://user-images.githubusercontent.com/35042430/225348309-b31422b4-a099-4fc0-972a-8b53eb5f288a.png)
+![image](https://user-images.githubusercontent.com/35042430/225348812-2091e3b9-d502-400d-a0a9-8f0f538aa5df.png)
+
+![image](https://user-images.githubusercontent.com/35042430/225348970-736b3efc-31d2-4030-82f3-338ae5436422.png)
+
+10. Create an ```Airflow``` user
+
+```Shell
+airflow users create --username jmaciel --firstname Jorge --lastname Maciel --role Admin --email jorge.maciel@fii-na.com --password fiiadmin
+```
+
+![image](https://user-images.githubusercontent.com/35042430/225349394-514474c0-8b9b-497b-9a39-6f86732861a3.png)
+
+11. Setup ```Nginx```
+
+```Bash
+sudo systemctl enable nginx
+```
+
+![image](https://user-images.githubusercontent.com/35042430/225349461-d4a09e90-a26b-45e4-a967-6d326175d811.png)
+
+```Bash
+# Create available site
+sudo nano /etc/nginx/sites-available/airflow 
+```
+
+```Vim
+server {
+    listen 81;
+    server_name localhost;
+location / {
+    proxy_pass [http://localhost:8081](http://localhost:8081);
+    proxy_set_header Host $host;
+    proxy_redirect off;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    }
+}
+```
+
+```Bash
+# Link available and enable nginx sites
+sudo ln -s /etc/nginx/sites-available/airflow /etc/nginx/sites-enabled/airflow
+```
+
+```Bash
+sudo nano /etc/nginx/nginx.conf
+```
+
+```Bash
+##
+# Basic Settings
+##
+
+sendfile on;
+tcp_nopush on;
+tcp_nodelay on;
+keepalive_timeout 65;
+types_hash_max_size 2048;
+```
+![image](https://user-images.githubusercontent.com/35042430/225350487-82550f08-882e-42bd-b1e8-cd760abf53a9.png)
+
+```
+# Run to check that nginx configs are correct
+sudo nginx -t
+```
+
+![image](https://user-images.githubusercontent.com/35042430/225350654-3c517548-7ba6-4559-a55f-98a1464360f7.png)
+
+12. Create Webserver Service with ```Systemd```
+
+```Bash
+# Webserver Service
+sudo curl -o /etc/systemd/system/airflow-webserver.service
+"https://raw.githubusercontent.com/apache/airflow/master/scripts/systemd/airflow-webserver.service"
+"https://raw.githubusercontent.com/apache/airflow/master/scripts/systemd/airflow-webserver.service"
+```
+
+![image](https://user-images.githubusercontent.com/35042430/225351838-ed3ac702-7ac5-4b9d-bf67-95d1959336aa.png)
+
+```Bash
+# Modifying Parameters
+sudo nano /etc/systemd/system/airflow-webserver.service
+# EnvironmentFile=/etc/sysconfig/airflow <--[Comment out this line]
+Environment="PATH=/home/airflow/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" <--[Add this line]
+ExecStart=/home/airflow/.local/bin/airflow webserver -p 8081 -w 2 --pid /home/airflow/airflow-webserver.pid
+```
+
+![image](https://user-images.githubusercontent.com/35042430/225352737-f1916ff2-4e0a-4e2e-b971-6ab684cd2374.png)
+
+```Bash
+# Scheduler Service
+sudo curl -o /etc/systemd/system/airflow-scheduler.service "https://raw.githubusercontent.com/apache/airflow/master/scripts/systemd/airflow-scheduler.service"
+```
+
+![image](https://user-images.githubusercontent.com/35042430/225352947-ced19a2f-0215-4e1c-8064-bf1c393a9bae.png)
+
+```Bash
+# Modifying Parameters
+sudo nano /etc/systemd/system/airflow-scheduler.service
+# EnvironmentFile=/etc/sysconfig/airflow <--[Comment out this line]
+Environment="PATH=/home/airflow/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+ExecStart=/home/airflow/.local/bin/airflow scheduler
+```
+
+![image](https://user-images.githubusercontent.com/35042430/225352967-0f96f397-8f24-4181-a95a-7f1f36311d47.png)
+
 
